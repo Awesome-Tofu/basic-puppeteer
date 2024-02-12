@@ -13,10 +13,11 @@ app.get('/screenshot', async (req, res) => {
     });
     const page = await browser.newPage();
     await page.goto('https://example.com');
-    await page.screenshot({ path: 'screenshot.png' });
+    const screenshotPath = '/tmp/screenshot.png';
+    await page.screenshot({ path: screenshotPath });
     await browser.close();
 
-    res.sendFile(path.join(__dirname, 'screenshot.png'));
+    res.sendFile(screenshotPath);
 });
 
 app.listen(port, () => {
