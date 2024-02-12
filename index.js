@@ -1,7 +1,7 @@
 // write code with puppeteer-core to screenshot and send image using express
 const express = require('express');
 const puppeteer = require('puppeteer-core');
-const chromium = require('chrome-aws-lambda');
+const chromium = require("@sparticuz/chromium");
 const fs = require('fs');
 const path = require('path');
 
@@ -13,8 +13,10 @@ app.get('/screenshot', async (req, res) => {
     const browser = await chromium.puppeteer.launch({
         args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
         defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath,
-        headless: true,
+        executablePath: await chromium.executablePath(
+				"https://github.com/Sparticuz/chromium/releases/download/v116.0.0/chromium-v116.0.0-pack.tar",
+			),
+        headless: false,
         ignoreHTTPSErrors: true,
     })
     const page = await browser.newPage();
