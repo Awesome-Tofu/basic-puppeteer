@@ -8,11 +8,12 @@ const app = express();
 const port = 3000;  
 
 app.get('/screenshot', async (req, res) => {
+    const weburl = req.query.url;
     const browser = await puppeteer.launch({
         executablePath: process.env.PUPPETEER_EXECUTABLE_PATH, 
     });
     const page = await browser.newPage();
-    await page.goto('https://example.com');
+    await page.goto(weburl);
     const screenshotPath = '/tmp/screenshot.png';
     await page.screenshot({ path: screenshotPath });
     await browser.close();
